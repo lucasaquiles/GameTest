@@ -1,11 +1,12 @@
 package gametest.ui;
 
-
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -28,6 +29,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
     Timer timer, timerMoveToLeft, timerMoveToRight, timerMoveToDown, tmpTimer, pauseButton, timerPlaces;
     JLabel[][] places = new JLabel[2][9];
+    int currentX, currentY;
+    boolean isMooving = false;
 
     /** Creates new form MainJFrame */
     public MainJFrame() {
@@ -43,7 +46,7 @@ public class MainJFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent ae) {
 
                 jButton1.setText("pausado!");
-                jButton1.setEnabled(false);   
+                jButton1.setEnabled(false);
             }
         });
 
@@ -54,6 +57,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
         mountPlaces();
         onColides();
+        currentX = (int) jPanelSquare.getBounds().getX();
+        currentY = (int) jPanelSquare.getBounds().getY();
     }
 
     public void onColides() {
@@ -84,6 +89,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanelBound = new javax.swing.JPanel();
         jPanelSquare = new javax.swing.JLabel();
+        jSeparatorDown = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -99,21 +106,37 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelBound.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jPanelSquare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/awesome.gif"))); // NOI18N
+        jPanelSquare.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanelSquareKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBoundLayout = new javax.swing.GroupLayout(jPanelBound);
         jPanelBound.setLayout(jPanelBoundLayout);
         jPanelBoundLayout.setHorizontalGroup(
             jPanelBoundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBoundLayout.createSequentialGroup()
-                .addGap(205, 205, 205)
-                .addComponent(jPanelSquare)
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanelBoundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBoundLayout.createSequentialGroup()
+                        .addComponent(jPanelSquare)
+                        .addGap(267, 267, 267))
+                    .addGroup(jPanelBoundLayout.createSequentialGroup()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanelBoundLayout.createSequentialGroup()
+                        .addComponent(jSeparatorDown, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanelBoundLayout.setVerticalGroup(
             jPanelBoundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBoundLayout.createSequentialGroup()
-                .addContainerGap(287, Short.MAX_VALUE)
-                .addComponent(jPanelSquare, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
+                .addComponent(jPanelSquare, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jSeparatorDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,31 +145,30 @@ public class MainJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelBound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
-                        .addContainerGap(260, Short.MAX_VALUE))))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(515, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jPanelBound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelBound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(15, 15, 15))
+                .addGap(35, 35, 35)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void mountPlaces() {
- 
-        int X = 10, Y = 10;
-        
+
+        int X = 30, Y = 30;
+
         final int SQUARE_WIDTH = 56;
         final int SQUARE_HEIGHT = 56;
 
@@ -172,44 +194,51 @@ public class MainJFrame extends javax.swing.JFrame {
                 places[i][j].setBorder(BorderFactory.createTitledBorder(""));
 
                 jPanelBound.add(places[i][j]);
-                Y = 10;
+                Y = 30;
             }
-            X = 10;
+            X = 30;
         }
+        jPanelBound.repaint();
     }
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+
+
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            System.out.println("to up ^");
+            System.out.println("+" + KeyEvent.getKeyText(evt.getKeyCode()));
             getCurrentTimer();
             timer.start();
             setCurrentTimer(timer);
         }
         if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
-            System.out.println("to down V");
+            System.out.println("+" + KeyEvent.getKeyText(evt.getKeyCode()));
             getCurrentTimer();
             timerMoveToDown.start();
             setCurrentTimer(timerMoveToDown);
         }
         if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
-            System.out.println("to left <<");
+            System.out.println("+" + KeyEvent.getKeyText(evt.getKeyCode()));
             getCurrentTimer();
             timerMoveToLeft.start();
             setCurrentTimer(timerMoveToLeft);
         }
         if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("to right >>");
+            System.out.println("+" + KeyEvent.getKeyText(evt.getKeyCode()));
             getCurrentTimer();
             timerMoveToRight.start();
             setCurrentTimer(timerMoveToRight);
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            System.out.println("+" + KeyEvent.getKeyText(evt.getKeyCode()));
             getCurrentTimer();
-
-
         }
     }//GEN-LAST:event_formKeyPressed
+
+    private void jPanelSquareKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelSquareKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelSquareKeyPressed
 
     public Timer getCurrentTimer() {
 
@@ -239,6 +268,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
                 jPanelSquare.setLocation((int) jPanelSquare.getLocation().getX() + 10, (int) (jPanelSquare.getLocation().getY()));
 
+                setTitle("x: " + jPanelSquare.getBounds().getX() + " y:  " + jPanelSquare.getBounds().getY());
             }
         });
     }
@@ -248,7 +278,20 @@ public class MainJFrame extends javax.swing.JFrame {
         timerMoveToDown.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent ae) {
-                jPanelSquare.setLocation((int) jPanelSquare.getLocation().getX(), (int) (jPanelSquare.getLocation().getY() + 10));
+
+
+                if (jPanelSquare.getBounds().intersects(jSeparatorDown.getBounds())) {
+
+                    getCurrentTimer();
+                    setCurrentTimer(timer);
+                    timer.start();
+                } else {
+
+                    jPanelSquare.setLocation((int) jPanelSquare.getLocation().getX(), (int) (jPanelSquare.getLocation().getY() + 10));
+                    setTitle("x: " + jPanelSquare.getBounds().getX() + " y:  " + jPanelSquare.getBounds().getY());
+                }
+
+//                jPanelSquare.getGraphics().draw3DRect(39, 20, 20,20, true);
             }
         });
     }
@@ -262,6 +305,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
                 jPanelSquare.setLocation((int) jPanelSquare.getLocation().getX() - 10, (int) (jPanelSquare.getLocation().getY()));
 
+                setTitle("x: " + jPanelSquare.getBounds().getX() + " y:  " + jPanelSquare.getBounds().getY());
             }
         });
     }
@@ -272,7 +316,28 @@ public class MainJFrame extends javax.swing.JFrame {
 
             public void actionPerformed(ActionEvent ae) {
 
-                jPanelSquare.setLocation((int) jPanelSquare.getLocation().getX(), (int) (jPanelSquare.getLocation().getY() - 10));
+                if (jPanelSquare.getBounds().intersects(jSeparator2.getBounds())) {
+
+                    double pointIntersected = jPanelBound.getBounds().intersection(jSeparator2.getBounds()).getWidth();
+
+                    int point = (int) Math.floor(pointIntersected) / 2;
+                    int squarePosition = (int) jPanelSquare.getBounds().getLocation().x;
+
+                    if (squarePosition > point) {
+                        System.out.println("bola vai pra lá >>");
+                    } else {
+                        System.out.println("bola vai pra cá <<");
+                    }
+
+                    timer.stop();
+                    timerMoveToDown.start();
+                    setCurrentTimer(timerMoveToDown);
+
+                } else {
+                    setTitle("x: " + jPanelSquare.getBounds().getX() + " y:  " + jPanelSquare.getBounds().getY());
+                    jPanelSquare.setLocation((int) jPanelSquare.getLocation().getX(), (int) (jPanelSquare.getLocation().getY() - 10));
+                }
+
             }
         });
 
@@ -293,5 +358,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanelBound;
     private javax.swing.JLabel jPanelSquare;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparatorDown;
     // End of variables declaration//GEN-END:variables
 }
