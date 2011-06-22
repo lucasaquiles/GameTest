@@ -147,8 +147,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void mountPlaces() {
-
-
+ 
         int X = 10, Y = 10;
         
         final int SQUARE_WIDTH = 56;
