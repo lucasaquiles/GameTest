@@ -150,7 +150,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
 
         int X = 10, Y = 10;
-        int WIDTH = 56, HEIGHT = 56;
+        
+        final int SQUARE_WIDTH = 56;
+        final int SQUARE_HEIGHT = 56;
 
         for (int i = 0; i < 2; i++) {
 
@@ -168,7 +170,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     X = (int) (places[i][j - 1].getBounds().getWidth() + X);
                 }
 
-                places[i][j].setBounds(X, Y, WIDTH, HEIGHT);
+                places[i][j].setBounds(X, Y, SQUARE_WIDTH, SQUARE_HEIGHT);
 
                 places[i][j].setIcon(new ImageIcon(getClass().getResource("/omg.gif")));
                 places[i][j].setBorder(BorderFactory.createTitledBorder(""));
