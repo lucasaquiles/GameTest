@@ -1,7 +1,6 @@
 package gametest.ui;
 
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -44,9 +43,7 @@ public class MainJFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent ae) {
 
                 jButton1.setText("pausado!");
-                jButton1.setEnabled(false);
-
-                
+                jButton1.setEnabled(false);   
             }
         });
 
